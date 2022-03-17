@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace BLT_Eater
 {
@@ -17,6 +18,28 @@ namespace BLT_Eater
             foreach (Ballot b in election.Ballots)
             {
                 Console.WriteLine(b);
+            }
+
+            Console.WriteLine();
+            Console.WriteLine("Ballots for Spreadsheet:");
+            string rankList = "";
+            for (int i = 1; i <= election.OptionCount; i++)
+            {
+                rankList += "\t" + i;
+            }
+            Console.WriteLine("Number\tWeight"+rankList);
+            foreach (Ballot b in election.Ballots)
+            {
+                Console.WriteLine(b.ToTSVString());
+            }
+
+            Console.WriteLine();
+            Console.WriteLine("Ranks By Option:");
+            Console.WriteLine("Option" + rankList + "\tUnranked");
+            List<OptionStat> stats = election.GetStatsByOption();
+            foreach (OptionStat os in stats)
+            {
+                Console.WriteLine(os.ToTSVString(election.OptionCount));
             }
         }
     }

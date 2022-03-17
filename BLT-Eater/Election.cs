@@ -82,9 +82,10 @@ namespace BLT_Eater
 
             Ballots = new List<Ballot>();
 
-            foreach(string ballot in ballotLines)
+            for (int i = 0; i < ballotLines.Count; i++)
             {
-                Ballots.Add(ParseBallot(ballot));
+                string ballot = ballotLines[i];
+                Ballots.Add(ParseBallot(i + 1, ballot));
             }
         }
 
@@ -96,10 +97,40 @@ namespace BLT_Eater
 
         public List<OptionStat> GetStatsByOption()
         {
-            return null;
+            List <OptionStat> result  = new List<OptionStat>();
+            foreach (Option o in Options.Values)
+            {
+                result.Add(new OptionStat()
+                {
+                    Option = o,
+                    Ranks = new Dictionary<int, int>(),
+                    Unranked = 0
+                });
+            }
+            foreach (Ballot b in Ballots)
+            {
+                foreach (OptionStat os in result)
+                {
+                    int? rank = b.GetRankForOption(os.Option);
+                    if (rank == null)
+                    {
+                        os.Unranked++;
+                    }
+                    else
+                    {
+                        int r = (int)rank;
+                        if(!os.Ranks.ContainsKey(r))
+                        {
+                            os.Ranks.Add(r, 0);
+                        }
+                        os.Ranks[r]++;
+                    }
+                }
+            }
+            return result;
         }
 
-        private Ballot ParseBallot(string ballot)
+        private Ballot ParseBallot(int number, string ballot)
         {            
             if (string.IsNullOrWhiteSpace(ballot))
             {
@@ -122,18 +153,35 @@ namespace BLT_Eater
                 ballotSelections.Add(Options[selection]);
             }
 
-            return new Ballot(weight, ballotSelections);
+            return new Ballot(number, weight, ballotSelections);
         }
     }
 
     public class OptionStat
     {
-        protected OptionStat()
+        internal OptionStat()
         {
 
         }
 
-        public Option Option { get; protected set; }
-        public int[] votes { get; protected set; }
+        public Option Option { get; internal set; }
+        public Dictionary<int, int> Ranks { get; internal set; }
+        public int Unranked { get; internal set; }
+
+        public string ToTSVString(int optionCount)
+        {
+            string rankings = "";
+            for (int i = 1; i <= optionCount; i++)
+            {
+                int ballots = 0;
+                int gotBallots;
+                if (Ranks.TryGetValue(i, out gotBallots))
+                {
+                    ballots = gotBallots;
+                }
+                rankings += "\t" + ballots;
+            }
+            return Option.Name + rankings + "\t" + Unranked;
+        }
     }
 }
