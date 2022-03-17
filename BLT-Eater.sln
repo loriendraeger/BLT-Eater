@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.810.11
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLT-Eater", "BLT-Eater\BLT-Eater.csproj", "{F67CD9FE-24B9-492F-B06D-8A5FDAB8F77B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F67CD9FE-24B9-492F-B06D-8A5FDAB8F77B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F67CD9FE-24B9-492F-B06D-8A5FDAB8F77B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F67CD9FE-24B9-492F-B06D-8A5FDAB8F77B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F67CD9FE-24B9-492F-B06D-8A5FDAB8F77B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DCF4FA5A-93B3-42F3-B113-49FEE96A5138}
+	EndGlobalSection
+EndGlobal
